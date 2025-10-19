@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: EduCloudAPI
+  datasource:
+    username: postgres
+    password: postgres123
+    url: jdbc:postgresql://localhost:5432/educloud
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+jwt:
+  secret: ${JWT_SECRET:mySecretKeyForJWTTokenGenerationPleaseChangeThisInProduction1234567890}
+  access-token-expiration: 900000  # 15 minutes in milliseconds
+  refresh-token-expiration: 604800000  # 7 days in milliseconds
