@@ -806,3 +806,8 @@ java.lang.NullPointerException: Cannot invoke "String.length()" because "name" i
 2025-10-29 14:25:17 [http-nio-8080-exec-2] INFO  : Completed initialization in 1 ms
 2025-10-29 14:25:52 [http-nio-8080-exec-10] ERROR : JWT token validation failed: JWT expired 2822737 milliseconds ago at 2025-10-29T12:38:50.000Z. Current time: 2025-10-29T13:25:52.737Z. Allowed clock skew: 0 milliseconds.
 2025-10-29 14:25:56 [http-nio-8080-exec-1] ERROR : JWT token validation failed: JWT expired 2826934 milliseconds ago at 2025-10-29T12:38:50.000Z. Current time: 2025-10-29T13:25:56.934Z. Allowed clock skew: 0 milliseconds.
+2025-10-29 14:35:11 [SpringApplicationShutdownHook] INFO  : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-29 14:35:11 [tomcat-shutdown] INFO  : Graceful shutdown complete
+2025-10-29 14:35:11 [SpringApplicationShutdownHook] INFO  : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-29 14:35:11 [SpringApplicationShutdownHook] INFO  : HikariPool-1 - Shutdown initiated...
+2025-10-29 14:35:11 [SpringApplicationShutdownHook] INFO  : HikariPool-1 - Shutdown completed.
