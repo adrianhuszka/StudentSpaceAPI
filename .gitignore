@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+/logs/archived/application_logback-2025-10-19.0.log
+/logs/archived/application_logback-2025-10-23.0.log
+/logs/archived/application_logback-2025-10-24.0.log
+/logs/archived/application_logback-2025-10-25.0.log
+/logs/archived/application_logback-2025-10-26.0.log
+/logs/archived/application_logback-2025-10-27.0.log
+/logs/archived/application_logback-2025-10-28.0.log
