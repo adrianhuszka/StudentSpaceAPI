@@ -5,6 +5,8 @@ public record ModuleRequestDTO(
         String title,
         String content,
         String moduleType,
-        String subjectId
+        String subjectId,
+        byte[] pdfFile,
+        String pdfFileName
 ) {
 }

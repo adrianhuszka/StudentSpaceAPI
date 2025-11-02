@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -14,6 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Types;
 import java.util.UUID;
 
 @Entity
@@ -35,6 +37,12 @@ public class Module implements Serializable {
     private String title;
     private String content;
     private ModuleTypes moduleType;
+
+    @JdbcTypeCode(Types.VARBINARY)
+    @Column(name = "pdf_file", columnDefinition = "bytea")
+    private byte[] pdfFile;
+
+    private String pdfFileName;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject_id", nullable = false)

@@ -49,9 +49,14 @@ public class SubjectController implements IController<Subject, SubjectRequestDTO
         return ResponseEntity.ok(subjectService.linkSubjectToProfession(UUID.fromString(subjectId), UUID.fromString(professionId)));
     }
 
+    @PutMapping("/unlink-subject-from-profession")
+    public ResponseEntity<String> unlinkSubjectFromProfession(@RequestParam String subjectId, @RequestParam String professionId) {
+        return ResponseEntity.ok(subjectService.unlinkSubjectFromProfession(UUID.fromString(subjectId), UUID.fromString(professionId)));
+    }
+
     @Override
-    @DeleteMapping
-    public ResponseEntity<Void> delete(String id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         subjectService.delete(UUID.fromString(id));
         return ResponseEntity.noContent().build();
     }

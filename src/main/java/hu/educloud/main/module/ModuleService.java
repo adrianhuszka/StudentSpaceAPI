@@ -32,13 +32,20 @@ public class ModuleService implements IService<Module, ModuleRequestDTO> {
         var subject = subjectRepository.findById(UUID.fromString(module.subjectId()))
                 .orElseThrow(() -> new NotFoundException(module.subjectId()));
 
-        var newModule = Module.builder()
+        var moduleBuilder = Module.builder()
                 .title(module.title())
-                .content(module.content())
                 .moduleType(ModuleTypes.valueOf(module.moduleType()))
-                .subject(subject)
-                .build();
+                .subject(subject);
 
+        // Handle PDF vs MD content
+        if (ModuleTypes.valueOf(module.moduleType()) == ModuleTypes.PDF) {
+            moduleBuilder.pdfFile(module.pdfFile())
+                    .pdfFileName(module.pdfFileName());
+        } else {
+            moduleBuilder.content(module.content());
+        }
+
+        var newModule = moduleBuilder.build();
         return moduleRepository.save(newModule).getId().toString();
     }
 
@@ -51,9 +58,19 @@ public class ModuleService implements IService<Module, ModuleRequestDTO> {
                 .orElseThrow(() -> new NotFoundException(module.subjectId()));
 
         existing.setTitle(module.title());
-        existing.setContent(module.content());
         existing.setModuleType(ModuleTypes.valueOf(module.moduleType()));
         existing.setSubject(subject);
+
+        // Handle PDF vs MD content
+        if (ModuleTypes.valueOf(module.moduleType()) == ModuleTypes.PDF) {
+            existing.setPdfFile(module.pdfFile());
+            existing.setPdfFileName(module.pdfFileName());
+            existing.setContent(null); // Clear content when switching to PDF
+        } else {
+            existing.setContent(module.content());
+            existing.setPdfFile(null); // Clear PDF when switching to MD
+            existing.setPdfFileName(null);
+        }
 
         return moduleRepository.save(existing).getId().toString();
     }

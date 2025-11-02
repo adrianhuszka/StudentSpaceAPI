@@ -39,11 +39,11 @@ public class Subject implements Serializable {
     private String name;
     private String description;
 
-    @ManyToMany(mappedBy = "subjects", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "subjects", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JsonManagedReference
     private List<Professions> professions;
 
-    @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Module> module;
 

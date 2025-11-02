@@ -68,5 +68,7 @@ public class AuthService {
                     user.getRoles());
             return new TokenResponse(newAccessToken, refreshToken, accessTokenExpiration);
         }
+
+        throw new BadCredentialsException("Invalid refresh token");
     }
 }

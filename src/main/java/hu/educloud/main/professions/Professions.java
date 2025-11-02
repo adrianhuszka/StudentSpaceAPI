@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -39,7 +41,8 @@ public class Professions implements Serializable {
     @Column(nullable = false)
     private String description;
 
-    @Lob
+    @JdbcTypeCode(Types.VARBINARY)
+    @Column(name = "image", columnDefinition = "bytea")
     private byte[] image;
 
     @ManyToMany(fetch = FetchType.EAGER)

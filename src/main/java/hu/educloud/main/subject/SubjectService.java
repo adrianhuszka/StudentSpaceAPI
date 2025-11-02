@@ -7,6 +7,7 @@ import hu.educloud.main.professions.ProfessionsRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -65,8 +66,34 @@ public class SubjectService implements IService<Subject, SubjectRequestDTO> {
         return subject.getId().toString();
     }
 
+    @Transactional
+    public String unlinkSubjectFromProfession(@NonNull UUID subjectId, @NonNull UUID professionId) {
+        var subject = subjectRepository.findById(subjectId)
+                .orElseThrow(() -> new NotFoundException(subjectId.toString()));
+
+        var profession = professionsRepository.findById(professionId)
+                .orElseThrow(() -> new NotFoundException(professionId.toString()));
+
+        // Use removeIf with ID comparison to ensure proper removal
+        profession.getSubjects().removeIf(s -> s.getId().equals(subjectId));
+        professionsRepository.save(profession);
+
+        return subject.getId().toString();
+    }
+
     @Override
     public void delete(@NonNull UUID id) {
+        var subject = subjectRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(id.toString()));
+
+        // Remove this subject from all professions (clears the many-to-many join table)
+        if (subject.getProfessions() != null) {
+            for (var profession : subject.getProfessions()) {
+                profession.getSubjects().removeIf(s -> s.getId().equals(id));
+                professionsRepository.save(profession);
+            }
+        }
+
         subjectRepository.deleteById(id);
     }
 }
