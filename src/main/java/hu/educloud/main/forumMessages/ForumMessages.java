@@ -6,8 +6,11 @@ import hu.educloud.main.users.Users;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -20,6 +23,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class ForumMessages implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -41,13 +45,35 @@ public class ForumMessages implements Serializable {
     @JsonBackReference
     private Forum forum;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private Date createdAt;
-    private String createdBy;
+
+    @CreatedBy
+    @Column(name = "created_by")
+    private UUID createdBy;
 
     @UpdateTimestamp
     @Column(nullable = false)
     private Date updatedAt;
-    private String updatedBy;
+
+    @LastModifiedBy
+    @Column(name = "updated_by")
+    private UUID updatedBy;
+
+    @PrePersist
+    public void prePersist() {
+        if (createdBy != null && author == null) {
+            author = new Users();
+            author.setId(createdBy);
+        }
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        if (createdBy != null && author == null) {
+            author = new Users();
+            author.setId(createdBy);
+        }
+    }
 }

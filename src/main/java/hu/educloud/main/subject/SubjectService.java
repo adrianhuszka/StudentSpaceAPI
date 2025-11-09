@@ -3,6 +3,8 @@ package hu.educloud.main.subject;
 import hu.educloud.main.common.IService;
 import hu.educloud.main.common.IServiceSimple;
 import hu.educloud.main.errors.NotFoundException;
+import hu.educloud.main.forum.Forum;
+import hu.educloud.main.forum.ForumRepository;
 import hu.educloud.main.professions.ProfessionsRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import java.util.UUID;
 public class SubjectService implements IService<Subject, SubjectRequestDTO> {
     private final SubjectRepository subjectRepository;
     private final ProfessionsRepository professionsRepository;
+    private final ForumRepository forumRepository;
 
     @Override
     public List<Subject> getAll() {
@@ -34,12 +37,25 @@ public class SubjectService implements IService<Subject, SubjectRequestDTO> {
 
     @Override
     public String save(@NonNull SubjectRequestDTO subject) {
-        var newSubject = Subject.builder()
+        final var newSubject = Subject.builder()
                 .name(subject.name())
                 .description(subject.description())
                 .build();
 
-        return subjectRepository.save(newSubject).getId().toString();
+        final var createdSubject = subjectRepository.save(newSubject);
+        Forum newForum = null;
+
+        if(subject.createForum()) {
+            newForum = forumRepository.save(
+                    Forum.builder()
+                            .subject(createdSubject)
+                            .build()
+            );
+        }
+
+        createdSubject.setForum(newForum);
+
+        return subjectRepository.save(createdSubject).getId().toString();
     }
 
     @Override
@@ -60,9 +76,16 @@ public class SubjectService implements IService<Subject, SubjectRequestDTO> {
         var profession = professionsRepository.findById(professionId)
                 .orElseThrow(() -> new NotFoundException(professionId.toString()));
 
-        profession.getSubjects().add(subject);
+        // Update both sides
+        if (profession.getSubjects() == null || profession.getSubjects().stream().noneMatch(s -> s.getId().equals(subjectId))) {
+            profession.getSubjects().add(subject);
+        }
+        if (subject.getProfessions() == null || subject.getProfessions().stream().noneMatch(p -> p.getId().equals(professionId))) {
+            subject.getProfessions().add(profession);
+        }
 
         professionsRepository.save(profession);
+        subjectRepository.save(subject);
         return subject.getId().toString();
     }
 
@@ -74,9 +97,16 @@ public class SubjectService implements IService<Subject, SubjectRequestDTO> {
         var profession = professionsRepository.findById(professionId)
                 .orElseThrow(() -> new NotFoundException(professionId.toString()));
 
-        // Use removeIf with ID comparison to ensure proper removal
-        profession.getSubjects().removeIf(s -> s.getId().equals(subjectId));
-        professionsRepository.save(profession);
+        // Remove from both sides
+        if (profession.getSubjects() != null) {
+            profession.getSubjects().removeIf(s -> s.getId().equals(subjectId));
+            professionsRepository.save(profession);
+        }
+
+        if (subject.getProfessions() != null) {
+            subject.getProfessions().removeIf(p -> p.getId().equals(professionId));
+            subjectRepository.save(subject);
+        }
 
         return subject.getId().toString();
     }

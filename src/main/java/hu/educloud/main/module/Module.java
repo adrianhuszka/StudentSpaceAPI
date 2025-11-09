@@ -1,12 +1,15 @@
 package hu.educloud.main.module;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import hu.educloud.main.exercises.Exercises;
 import hu.educloud.main.subject.Subject;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -16,6 +19,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Types;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -35,6 +39,8 @@ public class Module implements Serializable {
     private UUID id;
 
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String content;
     private ModuleTypes moduleType;
 
@@ -46,8 +52,12 @@ public class Module implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference
     private Subject subject;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "module", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Exercises> exercises;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

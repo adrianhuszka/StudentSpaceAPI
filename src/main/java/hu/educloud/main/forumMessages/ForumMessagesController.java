@@ -21,26 +21,26 @@ public class ForumMessagesController implements IControllerSimple<ForumMessages>
     }
 
     @Override
-    @GetMapping("/:id")
-    public ResponseEntity<ForumMessages> getById(String id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<ForumMessages> getById(@PathVariable String id) {
         return ResponseEntity.ok(forumMessagesService.findById(UUID.fromString(id)));
     }
 
     @Override
     @PostMapping
-    public ResponseEntity<String> create(ForumMessages forumMessages) {
+    public ResponseEntity<String> create(@RequestBody ForumMessages forumMessages) {
         return ResponseEntity.ok(forumMessagesService.save(forumMessages));
     }
 
     @Override
     @PutMapping
-    public ResponseEntity<String> update(ForumMessages forumMessages) {
+    public ResponseEntity<String> update(@RequestBody ForumMessages forumMessages) {
         return ResponseEntity.ok(forumMessagesService.update(forumMessages));
     }
 
     @Override
-    @DeleteMapping
-    public ResponseEntity<Void> delete(String id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         forumMessagesService.delete(UUID.fromString(id));
         return ResponseEntity.noContent().build();
     }

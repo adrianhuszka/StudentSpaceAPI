@@ -1,7 +1,6 @@
 package hu.educloud.main.subject;
 
 import hu.educloud.main.common.IController;
-import hu.educloud.main.common.IControllerSimple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +21,8 @@ public class SubjectController implements IController<Subject, SubjectRequestDTO
     }
 
     @Override
-    @GetMapping("/:id")
-    public ResponseEntity<Subject> getById(String id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Subject> getById(@PathVariable String id) {
         return ResponseEntity.ok(subjectService.findById(UUID.fromString(id)));
     }
 
@@ -61,4 +60,3 @@ public class SubjectController implements IController<Subject, SubjectRequestDTO
         return ResponseEntity.noContent().build();
     }
 }
-

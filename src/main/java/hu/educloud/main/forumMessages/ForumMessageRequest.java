@@ -1,4 +1,7 @@
 package hu.educloud.main.forumMessages;
 
-public record ForumMessageRequest() {
+public record ForumMessageRequest(
+        String message,
+        String forumId
+) {
 }
