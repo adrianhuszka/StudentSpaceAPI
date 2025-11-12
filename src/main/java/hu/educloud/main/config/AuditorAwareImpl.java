@@ -2,6 +2,9 @@ package hu.educloud.main.config;
 
 import hu.educloud.main.users.UsersRepository;
 import hu.educloud.main.users.Users;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.FlushModeType;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
@@ -15,6 +18,9 @@ public class AuditorAwareImpl implements AuditorAware<UUID> {
     @Autowired
     private UsersRepository usersRepository;
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Override
     public Optional<UUID> getCurrentAuditor() {
         String username = SecurityUtils.getCurrentUsername();
@@ -22,7 +28,14 @@ public class AuditorAwareImpl implements AuditorAware<UUID> {
             return Optional.empty();
         }
 
-        return usersRepository.findByUsername(username)
-                .map(Users::getId);
+        // Disable auto-flush to prevent infinite recursion during auditing
+        FlushModeType originalFlushMode = entityManager.getFlushMode();
+        try {
+            entityManager.setFlushMode(FlushModeType.COMMIT);
+            return usersRepository.findByUsername(username)
+                    .map(Users::getId);
+        } finally {
+            entityManager.setFlushMode(originalFlushMode);
+        }
     }
 }

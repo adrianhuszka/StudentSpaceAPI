@@ -37,7 +37,6 @@ public class ForumMessages implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
-    @JsonBackReference
     private Users author;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -60,20 +59,4 @@ public class ForumMessages implements Serializable {
     @LastModifiedBy
     @Column(name = "updated_by")
     private UUID updatedBy;
-
-    @PrePersist
-    public void prePersist() {
-        if (createdBy != null && author == null) {
-            author = new Users();
-            author.setId(createdBy);
-        }
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        if (createdBy != null && author == null) {
-            author = new Users();
-            author.setId(createdBy);
-        }
-    }
 }

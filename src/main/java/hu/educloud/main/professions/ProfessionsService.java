@@ -1,6 +1,5 @@
 package hu.educloud.main.professions;
 
-import hu.educloud.main.common.IService;
 import hu.educloud.main.errors.NotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +26,9 @@ public class ProfessionsService {
                 profession.getDescription(),
                 profession.getImage() != null ? encodeBase64Image(profession.getImage()) : null,
                 profession.getCreatedAt(),
-                profession.getCreatedBy(),
+                profession.getCreatedBy() != null ? profession.getCreatedBy().toString() : null,
                 profession.getUpdatedAt(),
-                profession.getUpdatedBy()
+                profession.getUpdatedBy() != null ? profession.getUpdatedBy().toString() : null
         )).toList();
     }
 
@@ -42,9 +41,9 @@ public class ProfessionsService {
                 profession.getDescription(),
                 profession.getImage() != null ? encodeBase64Image(profession.getImage()) : null,
                 profession.getCreatedAt(),
-                profession.getCreatedBy(),
+                profession.getCreatedBy() != null ? profession.getCreatedBy().toString() : null,
                 profession.getUpdatedAt(),
-                profession.getUpdatedBy()
+                profession.getUpdatedBy() != null ? profession.getUpdatedBy().toString() : null
         );
     }
 

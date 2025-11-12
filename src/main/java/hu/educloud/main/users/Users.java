@@ -1,5 +1,6 @@
 package hu.educloud.main.users;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import hu.educloud.main.forumMessages.ForumMessages;
 import jakarta.persistence.*;
@@ -42,6 +43,6 @@ public class Users implements Serializable {
     private Set<UserRole> roles;
 
     @OneToMany(mappedBy = "author")
-    @JsonManagedReference
+    @JsonBackReference
     private List<ForumMessages> forumMessages;
 }

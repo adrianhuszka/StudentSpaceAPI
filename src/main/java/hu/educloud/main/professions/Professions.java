@@ -60,12 +60,12 @@ public class Professions implements Serializable {
 
     @CreatedBy
     @Column(updatable = false)
-    private String createdBy;
+    private UUID createdBy;
 
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
     @LastModifiedBy
-    private String updatedBy;
+    private UUID updatedBy;
 }
