@@ -1,7 +1,7 @@
-package hu.educloud.main.users;
+package hu.studentspace.main.users;
 
-import hu.educloud.main.common.IController;
-import hu.educloud.main.config.SecurityUtils;
+import hu.studentspace.main.common.IController;
+import hu.studentspace.main.config.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

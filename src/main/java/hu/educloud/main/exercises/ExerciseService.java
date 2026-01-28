@@ -1,8 +1,8 @@
-package hu.educloud.main.exercises;
+package hu.studentspace.main.exercises;
 
-import hu.educloud.main.errors.NotFoundException;
-import hu.educloud.main.module.ModuleRepository;
-import hu.educloud.main.module.ModuleTypes;
+import hu.studentspace.main.errors.NotFoundException;
+import hu.studentspace.main.module.ModuleRepository;
+import hu.studentspace.main.module.ModuleTypes;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,8 @@ public class ExerciseService {
     }
 
     public Exercises findById(String id) {
-        return exerciseRepository.findById(UUID.fromString(id)).orElseThrow(() -> new NotFoundException("Exercise not found"));
+        return exerciseRepository.findById(UUID.fromString(id))
+                .orElseThrow(() -> new NotFoundException("Exercise not found"));
     }
 
     public List<Exercises> findByModule(String moduleId) {
@@ -30,8 +31,7 @@ public class ExerciseService {
 
     public Exercises save(@NotNull ExerciseRequest request) {
         var module = moduleRepository.findById(UUID.fromString(request.id())).orElseThrow(
-                () -> new NotFoundException("Module not found")
-        );
+                () -> new NotFoundException("Module not found"));
 
         Exercises exercise = Exercises.builder()
                 .module(module)
@@ -45,12 +45,10 @@ public class ExerciseService {
 
     public Exercises update(@NotNull ExerciseRequest request) {
         var existing = exerciseRepository.findById(UUID.fromString(request.id())).orElseThrow(
-                () -> new NotFoundException("Exercise not found")
-        );
+                () -> new NotFoundException("Exercise not found"));
 
         var module = moduleRepository.findById(UUID.fromString(request.id())).orElseThrow(
-                () -> new NotFoundException("Module not found")
-        );
+                () -> new NotFoundException("Module not found"));
 
         existing.setModule(module);
         existing.setType(ExerciseType.valueOf(request.type()));
@@ -62,8 +60,7 @@ public class ExerciseService {
 
     public Exercises delete(@NotNull String id) {
         var existing = exerciseRepository.findById(UUID.fromString(id)).orElseThrow(
-                () -> new NotFoundException("Exercise not found")
-        );
+                () -> new NotFoundException("Exercise not found"));
         exerciseRepository.delete(existing);
         return existing;
     }

@@ -1,9 +1,9 @@
-package hu.educloud.main.module;
+package hu.studentspace.main.module;
 
-import hu.educloud.main.common.IService;
-import hu.educloud.main.common.IServiceSimple;
-import hu.educloud.main.errors.NotFoundException;
-import hu.educloud.main.subject.SubjectRepository;
+import hu.studentspace.main.common.IService;
+import hu.studentspace.main.common.IServiceSimple;
+import hu.studentspace.main.errors.NotFoundException;
+import hu.studentspace.main.subject.SubjectRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
-package hu.educloud.main.config;
+package hu.studentspace.main.config;
 
-import hu.educloud.main.users.UsersRepository;
+import hu.studentspace.main.users.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,12 +25,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         var user = usersRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
-        Collection<GrantedAuthority> authorities = user.getRoles() != null ?
-                user.getRoles().stream()
-                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
-                    .map(auth -> (GrantedAuthority) auth)
-                    .toList() :
-                new ArrayList<>();
+        Collection<GrantedAuthority> authorities = user.getRoles() != null ? user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
+                .map(auth -> (GrantedAuthority) auth)
+                .toList() : new ArrayList<>();
 
         return User.builder()
                 .username(user.getUsername())

@@ -1,11 +1,11 @@
-package hu.educloud.main.subject;
+package hu.studentspace.main.subject;
 
-import hu.educloud.main.common.IService;
-import hu.educloud.main.common.IServiceSimple;
-import hu.educloud.main.errors.NotFoundException;
-import hu.educloud.main.forum.Forum;
-import hu.educloud.main.forum.ForumRepository;
-import hu.educloud.main.professions.ProfessionsRepository;
+import hu.studentspace.main.common.IService;
+import hu.studentspace.main.common.IServiceSimple;
+import hu.studentspace.main.errors.NotFoundException;
+import hu.studentspace.main.forum.Forum;
+import hu.studentspace.main.forum.ForumRepository;
+import hu.studentspace.main.professions.ProfessionsRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -45,12 +45,11 @@ public class SubjectService implements IService<Subject, SubjectRequestDTO> {
         final var createdSubject = subjectRepository.save(newSubject);
         Forum newForum = null;
 
-        if(subject.createForum()) {
+        if (subject.createForum()) {
             newForum = forumRepository.save(
                     Forum.builder()
                             .subject(createdSubject)
-                            .build()
-            );
+                            .build());
         }
 
         createdSubject.setForum(newForum);
@@ -77,10 +76,12 @@ public class SubjectService implements IService<Subject, SubjectRequestDTO> {
                 .orElseThrow(() -> new NotFoundException(professionId.toString()));
 
         // Update both sides
-        if (profession.getSubjects() == null || profession.getSubjects().stream().noneMatch(s -> s.getId().equals(subjectId))) {
+        if (profession.getSubjects() == null
+                || profession.getSubjects().stream().noneMatch(s -> s.getId().equals(subjectId))) {
             profession.getSubjects().add(subject);
         }
-        if (subject.getProfessions() == null || subject.getProfessions().stream().noneMatch(p -> p.getId().equals(professionId))) {
+        if (subject.getProfessions() == null
+                || subject.getProfessions().stream().noneMatch(p -> p.getId().equals(professionId))) {
             subject.getProfessions().add(profession);
         }
 

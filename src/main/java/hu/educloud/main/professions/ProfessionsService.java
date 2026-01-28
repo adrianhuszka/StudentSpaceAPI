@@ -1,6 +1,6 @@
-package hu.educloud.main.professions;
+package hu.studentspace.main.professions;
 
-import hu.educloud.main.errors.NotFoundException;
+import hu.studentspace.main.errors.NotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Contract;
@@ -19,8 +19,7 @@ public class ProfessionsService {
     public List<ProfessionsResponseDTO> getAll() {
         var professions = professionsRepository.findAll();
 
-        return professions.stream().map(profession ->
-            new ProfessionsResponseDTO(
+        return professions.stream().map(profession -> new ProfessionsResponseDTO(
                 profession.getId().toString(),
                 profession.getName(),
                 profession.getDescription(),
@@ -28,8 +27,7 @@ public class ProfessionsService {
                 profession.getCreatedAt(),
                 profession.getCreatedBy() != null ? profession.getCreatedBy().toString() : null,
                 profession.getUpdatedAt(),
-                profession.getUpdatedBy() != null ? profession.getUpdatedBy().toString() : null
-        )).toList();
+                profession.getUpdatedBy() != null ? profession.getUpdatedBy().toString() : null)).toList();
     }
 
     public ProfessionsResponseDTO findById(@NonNull UUID id) {
@@ -43,8 +41,7 @@ public class ProfessionsService {
                 profession.getCreatedAt(),
                 profession.getCreatedBy() != null ? profession.getCreatedBy().toString() : null,
                 profession.getUpdatedAt(),
-                profession.getUpdatedBy() != null ? profession.getUpdatedBy().toString() : null
-        );
+                profession.getUpdatedBy() != null ? profession.getUpdatedBy().toString() : null);
     }
 
     public String save(@NonNull ProfessionsRequestDTO professions) {
@@ -53,8 +50,8 @@ public class ProfessionsService {
                         .name(professions.name())
                         .description(professions.description())
                         .image(professions.image() != null ? decodeBase64Image(professions.image()) : null)
-                        .build()
-        ).getId().toString();
+                        .build())
+                .getId().toString();
     }
 
     public String update(@NonNull ProfessionsRequestDTO professions) {
@@ -75,7 +72,8 @@ public class ProfessionsService {
     }
 
     private byte[] decodeBase64Image(String image) {
-        if (image == null) return null;
+        if (image == null)
+            return null;
         String cleaned = image.trim();
         int comma = cleaned.indexOf(',');
         if (comma != -1 && cleaned.substring(0, comma).contains("base64")) {
@@ -91,7 +89,8 @@ public class ProfessionsService {
     }
 
     private String encodeBase64Image(byte[] imageBytes) {
-        if (imageBytes == null || imageBytes.length == 0) return null;
+        if (imageBytes == null || imageBytes.length == 0)
+            return null;
 
         String mimeType = detectImageMimeType(imageBytes);
         String base64Data = Base64.getEncoder().encodeToString(imageBytes);
@@ -106,7 +105,7 @@ public class ProfessionsService {
 
         // Check PNG signature
         if (imageBytes[0] == (byte) 0x89 && imageBytes[1] == 0x50 &&
-            imageBytes[2] == 0x4E && imageBytes[3] == 0x47) {
+                imageBytes[2] == 0x4E && imageBytes[3] == 0x47) {
             return "image/png";
         }
 
@@ -122,9 +121,9 @@ public class ProfessionsService {
 
         // Check WebP signature
         if (imageBytes.length >= 12 && imageBytes[0] == 0x52 && imageBytes[1] == 0x49 &&
-            imageBytes[2] == 0x46 && imageBytes[3] == 0x46 &&
-            imageBytes[8] == 0x57 && imageBytes[9] == 0x45 &&
-            imageBytes[10] == 0x42 && imageBytes[11] == 0x50) {
+                imageBytes[2] == 0x46 && imageBytes[3] == 0x46 &&
+                imageBytes[8] == 0x57 && imageBytes[9] == 0x45 &&
+                imageBytes[10] == 0x42 && imageBytes[11] == 0x50) {
             return "image/webp";
         }
 

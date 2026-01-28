@@ -1,4 +1,4 @@
-package hu.educloud.main.config;
+package hu.studentspace.main.config;
 
 import org.jetbrains.annotations.Nullable;
 import org.springframework.security.core.Authentication;
@@ -34,9 +34,8 @@ public class SecurityUtils {
     public static boolean isAuthenticated() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication != null &&
-               authentication.isAuthenticated() &&
-               !(authentication.getPrincipal() instanceof String &&
-                 authentication.getPrincipal().equals("anonymousUser"));
+                authentication.isAuthenticated() &&
+                !(authentication.getPrincipal() instanceof String &&
+                        authentication.getPrincipal().equals("anonymousUser"));
     }
 }
-

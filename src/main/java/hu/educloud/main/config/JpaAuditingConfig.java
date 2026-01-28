@@ -1,4 +1,4 @@
-package hu.educloud.main.config;
+package hu.studentspace.main.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -7,4 +7,3 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing(auditorAwareRef = "auditorAwareImpl")
 public class JpaAuditingConfig {
 }
-

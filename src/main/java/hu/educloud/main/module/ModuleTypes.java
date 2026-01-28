@@ -1,4 +1,4 @@
-package hu.educloud.main.module;
+package hu.studentspace.main.module;
 
 public enum ModuleTypes {
     PDF,

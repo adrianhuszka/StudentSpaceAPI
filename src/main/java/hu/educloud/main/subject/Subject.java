@@ -1,9 +1,9 @@
-package hu.educloud.main.subject;
+package hu.studentspace.main.subject;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import hu.educloud.main.forum.Forum;
-import hu.educloud.main.module.Module;
-import hu.educloud.main.professions.Professions;
+import hu.studentspace.main.forum.Forum;
+import hu.studentspace.main.module.Module;
+import hu.studentspace.main.professions.Professions;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -39,7 +39,8 @@ public class Subject implements Serializable {
     private String name;
     private String description;
 
-    @ManyToMany(mappedBy = "subjects", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToMany(mappedBy = "subjects", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.DETACH })
     @JsonManagedReference
     private List<Professions> professions;
 

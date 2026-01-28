@@ -1,10 +1,10 @@
 spring:
   application:
-    name: EduCloudAPI
+    name: StudentSpaceAPI
   datasource:
     username: postgres
     password: postgres123
-    url: jdbc:postgresql://localhost:5432/educloud
+    url: jdbc:postgresql://localhost:5432/StudentSpace
 
   jpa:
     hibernate:

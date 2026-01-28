@@ -1,4 +1,4 @@
-package hu.educloud.main.subject;
+package hu.studentspace.main.subject;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

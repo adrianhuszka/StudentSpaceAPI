@@ -1,9 +1,9 @@
-package hu.educloud.main.exercises;
+package hu.studentspace.main.exercises;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
-import hu.educloud.main.module.Module;
+import hu.studentspace.main.module.Module;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;

@@ -1,4 +1,4 @@
-package hu.educloud.main.errors;
+package hu.studentspace.main.errors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

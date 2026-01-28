@@ -1,4 +1,4 @@
-package hu.educloud.main.exercises;
+package hu.studentspace.main.exercises;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

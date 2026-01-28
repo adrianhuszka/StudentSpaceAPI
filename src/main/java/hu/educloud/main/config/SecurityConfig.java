@@ -1,4 +1,4 @@
-package hu.educloud.main.config;
+package hu.studentspace.main.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -44,24 +44,27 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-            .cors(httpSecurityCorsConfigurer -> {
-                httpSecurityCorsConfigurer.configurationSource(request -> {
-                    var cors = new CorsConfiguration();
-                    cors.setAllowedOrigins(java.util.List.of("http://localhost:4200"));
-                    cors.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    cors.setAllowedHeaders(java.util.List.of("*"));
-                    cors.setAllowCredentials(true);
-                    return cors;
-                });
-            })
-            .authorizeHttpRequests(authorizeRequests -> {
-                authorizeRequests
-                    .requestMatchers("/api/v1/auth/**").permitAll()  // Allow public access to auth endpoints
-                    .anyRequest().authenticated();  // All other endpoints require authentication
-            })
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authenticationProvider(authenticationProvider())
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .cors(httpSecurityCorsConfigurer -> {
+                    httpSecurityCorsConfigurer.configurationSource(request -> {
+                        var cors = new CorsConfiguration();
+                        cors.setAllowedOrigins(java.util.List.of("http://localhost:4200"));
+                        cors.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                        cors.setAllowedHeaders(java.util.List.of("*"));
+                        cors.setAllowCredentials(true);
+                        return cors;
+                    });
+                })
+                .authorizeHttpRequests(authorizeRequests -> {
+                    authorizeRequests
+                            .requestMatchers("/api/v1/auth/**").permitAll() // Allow public access to auth endpoints
+                            .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
+                                    "/v3/api-docs.yaml")
+                            .permitAll() // Swagger
+                            .anyRequest().authenticated(); // All other endpoints require authentication
+                })
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

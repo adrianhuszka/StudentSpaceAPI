@@ -1,8 +1,8 @@
-package hu.educloud.main.forumMessages;
+package hu.studentspace.main.forumMessages;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import hu.educloud.main.forum.Forum;
-import hu.educloud.main.users.Users;
+import hu.studentspace.main.forum.Forum;
+import hu.studentspace.main.users.Users;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;

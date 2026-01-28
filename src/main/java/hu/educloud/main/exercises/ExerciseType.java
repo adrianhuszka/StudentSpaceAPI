@@ -1,4 +1,4 @@
-package hu.educloud.main.exercises;
+package hu.studentspace.main.exercises;
 
 public enum ExerciseType {
     MULTIPLE_CHOICE,

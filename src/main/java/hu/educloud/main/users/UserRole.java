@@ -1,4 +1,4 @@
-package hu.educloud.main.users;
+package hu.studentspace.main.users;
 
 public enum UserRole {
     STUDENT,

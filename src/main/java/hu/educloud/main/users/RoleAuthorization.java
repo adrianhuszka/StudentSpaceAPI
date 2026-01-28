@@ -1,4 +1,4 @@
-package hu.educloud.main.users;
+package hu.studentspace.main.users;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -16,31 +16,36 @@ public class RoleAuthorization {
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.RUNTIME)
     @PreAuthorize("hasRole('STUDENT')")
-    public @interface IsStudent {}
+    public @interface IsStudent {
+    }
 
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.RUNTIME)
     @PreAuthorize("hasRole('TEACHER')")
-    public @interface IsTeacher {}
+    public @interface IsTeacher {
+    }
 
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.RUNTIME)
     @PreAuthorize("hasRole('ADMIN')")
-    public @interface IsAdmin {}
+    public @interface IsAdmin {
+    }
 
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.RUNTIME)
     @PreAuthorize("hasRole('SUPERADMIN')")
-    public @interface IsSuperAdmin {}
+    public @interface IsSuperAdmin {
+    }
 
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.RUNTIME)
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
-    public @interface IsAdminOrAbove {}
+    public @interface IsAdminOrAbove {
+    }
 
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.RUNTIME)
     @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN', 'SUPERADMIN')")
-    public @interface IsTeacherOrAbove {}
+    public @interface IsTeacherOrAbove {
+    }
 }
-

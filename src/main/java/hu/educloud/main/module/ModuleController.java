@@ -1,6 +1,6 @@
-package hu.educloud.main.module;
+package hu.studentspace.main.module;
 
-import hu.educloud.main.common.IController;
+import hu.studentspace.main.common.IController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -71,7 +71,8 @@ public class ModuleController implements IController<Module, ModuleRequestDTO> {
         }
 
         var fileName = module.getPdfFileName();
-        if (!StringUtils.hasText(fileName)) fileName = "file.pdf";
+        if (!StringUtils.hasText(fileName))
+            fileName = "file.pdf";
 
         // Use RFC5987 encoding for UTF-8 filenames to avoid Tomcat charset issues
         String encoded = URLEncoder.encode(fileName, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
@@ -112,7 +113,6 @@ public class ModuleController implements IController<Module, ModuleRequestDTO> {
                 moduleType,
                 subjectId,
                 pdfBytes,
-                pdfFileName
-        );
+                pdfFileName);
     }
 }

@@ -1,7 +1,7 @@
-package hu.educloud.main.forum;
+package hu.studentspace.main.forum;
 
-import hu.educloud.main.common.IServiceSimple;
-import hu.educloud.main.errors.NotFoundException;
+import hu.studentspace.main.common.IServiceSimple;
+import hu.studentspace.main.errors.NotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -45,4 +45,3 @@ public class ForumService implements IServiceSimple<Forum> {
         forumRepository.deleteById(id);
     }
 }
-

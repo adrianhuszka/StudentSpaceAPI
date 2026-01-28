@@ -1,8 +1,8 @@
-package hu.educloud.main.module;
+package hu.studentspace.main.module;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import hu.educloud.main.exercises.Exercises;
-import hu.educloud.main.subject.Subject;
+import hu.studentspace.main.exercises.Exercises;
+import hu.studentspace.main.subject.Subject;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;

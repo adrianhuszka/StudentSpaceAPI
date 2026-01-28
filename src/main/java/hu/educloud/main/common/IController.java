@@ -1,4 +1,4 @@
-package hu.educloud.main.common;
+package hu.studentspace.main.common;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

@@ -1,7 +1,7 @@
-package hu.educloud.main.users;
+package hu.studentspace.main.users;
 
-import hu.educloud.main.common.IService;
-import hu.educloud.main.errors.NotFoundException;
+import hu.studentspace.main.common.IService;
+import hu.studentspace.main.errors.NotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class UsersService implements IService<Users, UsersDTO> {
         return usersRepository.findById(id).orElseThrow(() -> new NotFoundException(id.toString()));
     }
 
-    public  Users findByUsername(@NonNull String username) {
+    public Users findByUsername(@NonNull String username) {
         return usersRepository.findAll().stream()
                 .filter(user -> user.getUsername().equals(username))
                 .findFirst()

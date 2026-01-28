@@ -1,9 +1,8 @@
-package hu.educloud.main.professions;
+package hu.studentspace.main.professions;
 
 public record ProfessionsRequestDTO(
-        String id,
-        String name,
-        String description,
-        String image
-) {
+                String id,
+                String name,
+                String description,
+                String image) {
 }

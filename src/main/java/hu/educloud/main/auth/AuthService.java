@@ -1,10 +1,10 @@
-package hu.educloud.main.auth;
+package hu.studentspace.main.auth;
 
-import hu.educloud.main.errors.BadCredentialsException;
-import hu.educloud.main.users.Users;
-import hu.educloud.main.users.UsersDTO;
-import hu.educloud.main.users.UsersRepository;
-import hu.educloud.main.users.UsersService;
+import hu.studentspace.main.errors.BadCredentialsException;
+import hu.studentspace.main.users.Users;
+import hu.studentspace.main.users.UsersDTO;
+import hu.studentspace.main.users.UsersRepository;
+import hu.studentspace.main.users.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;

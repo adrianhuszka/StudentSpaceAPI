@@ -1,7 +1,7 @@
-package hu.educloud.main.professions;
+package hu.studentspace.main.professions;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import hu.educloud.main.subject.Subject;
+import hu.studentspace.main.subject.Subject;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -46,11 +46,7 @@ public class Professions implements Serializable {
     private byte[] image;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "professions_subjects",
-            joinColumns = @JoinColumn(name = "professions_id"),
-            inverseJoinColumns = @JoinColumn(name = "subject_id")
-    )
+    @JoinTable(name = "professions_subjects", joinColumns = @JoinColumn(name = "professions_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
     @JsonBackReference
     private List<Subject> subjects;
 

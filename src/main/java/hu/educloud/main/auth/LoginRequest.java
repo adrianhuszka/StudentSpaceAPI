@@ -1,8 +1,6 @@
-package hu.educloud.main.auth;
+package hu.studentspace.main.auth;
 
 public record LoginRequest(
-        String username,
-        String password
-) {
+                String username,
+                String password) {
 }
-

@@ -1,6 +1,6 @@
-package hu.educloud.main.forum;
+package hu.studentspace.main.forum;
 
-import hu.educloud.main.common.IControllerSimple;
+import hu.studentspace.main.common.IControllerSimple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,4 +45,3 @@ public class ForumController implements IControllerSimple<Forum> {
         return ResponseEntity.noContent().build();
     }
 }
-

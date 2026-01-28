@@ -1,4 +1,4 @@
-package hu.educloud.main.auth;
+package hu.studentspace.main.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -28,7 +28,8 @@ public class JwtService {
     @Value("${jwt.refresh-token-expiration}")
     private long refreshTokenExpiration;
 
-    public String generateAccessToken(String username, String userId, java.util.Set<hu.educloud.main.users.UserRole> roles) {
+    public String generateAccessToken(String username, String userId,
+            java.util.Set<hu.studentspace.main.users.UserRole> roles) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
         claims.put("type", "access");
@@ -38,7 +39,8 @@ public class JwtService {
         return generateToken(claims, username, accessTokenExpiration);
     }
 
-    public String generateRefreshToken(String username, String userId, java.util.Set<hu.educloud.main.users.UserRole> roles) {
+    public String generateRefreshToken(String username, String userId,
+            java.util.Set<hu.studentspace.main.users.UserRole> roles) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
         claims.put("type", "refresh");

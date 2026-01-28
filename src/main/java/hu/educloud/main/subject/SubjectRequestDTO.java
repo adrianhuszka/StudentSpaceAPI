@@ -1,9 +1,8 @@
-package hu.educloud.main.subject;
+package hu.studentspace.main.subject;
 
 public record SubjectRequestDTO(
-        String id,
-        String name,
-        String description,
-        Boolean createForum
-) {
+                String id,
+                String name,
+                String description,
+                Boolean createForum) {
 }

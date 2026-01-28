@@ -1,4 +1,4 @@
-package hu.educloud.main.professions;
+package hu.studentspace.main.professions;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

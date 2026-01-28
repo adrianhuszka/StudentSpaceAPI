@@ -1,6 +1,6 @@
-package hu.educloud.main.forumMessages;
+package hu.studentspace.main.forumMessages;
 
-import hu.educloud.main.common.IControllerSimple;
+import hu.studentspace.main.common.IControllerSimple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,4 +40,3 @@ public class ForumMessagesController {
         return ResponseEntity.noContent().build();
     }
 }
-

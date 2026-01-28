@@ -1,7 +1,5 @@
-package hu.educloud.main.auth;
+package hu.studentspace.main.auth;
 
 public record RefreshTokenRequest(
-        String refreshToken
-) {
+                String refreshToken) {
 }
-

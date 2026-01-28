@@ -1,6 +1,6 @@
-package hu.educloud.main.subject;
+package hu.studentspace.main.subject;
 
-import hu.educloud.main.common.IController;
+import hu.studentspace.main.common.IController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,13 +44,17 @@ public class SubjectController implements IController<Subject, SubjectRequestDTO
     }
 
     @PutMapping("/link-subject-to-profession")
-    public ResponseEntity<String> linkSubjectToProfession(@RequestParam String subjectId, @RequestParam String professionId) {
-        return ResponseEntity.ok(subjectService.linkSubjectToProfession(UUID.fromString(subjectId), UUID.fromString(professionId)));
+    public ResponseEntity<String> linkSubjectToProfession(@RequestParam String subjectId,
+            @RequestParam String professionId) {
+        return ResponseEntity
+                .ok(subjectService.linkSubjectToProfession(UUID.fromString(subjectId), UUID.fromString(professionId)));
     }
 
     @PutMapping("/unlink-subject-from-profession")
-    public ResponseEntity<String> unlinkSubjectFromProfession(@RequestParam String subjectId, @RequestParam String professionId) {
-        return ResponseEntity.ok(subjectService.unlinkSubjectFromProfession(UUID.fromString(subjectId), UUID.fromString(professionId)));
+    public ResponseEntity<String> unlinkSubjectFromProfession(@RequestParam String subjectId,
+            @RequestParam String professionId) {
+        return ResponseEntity.ok(
+                subjectService.unlinkSubjectFromProfession(UUID.fromString(subjectId), UUID.fromString(professionId)));
     }
 
     @Override

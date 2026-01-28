@@ -1,7 +1,7 @@
-package hu.educloud.main.config;
+package hu.studentspace.main.config;
 
-import hu.educloud.main.users.UsersRepository;
-import hu.educloud.main.users.Users;
+import hu.studentspace.main.users.UsersRepository;
+import hu.studentspace.main.users.Users;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.FlushModeType;
 import jakarta.persistence.PersistenceContext;

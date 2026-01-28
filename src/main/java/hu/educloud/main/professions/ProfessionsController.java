@@ -1,7 +1,7 @@
-package hu.educloud.main.professions;
+package hu.studentspace.main.professions;
 
-import hu.educloud.main.common.IController;
-import hu.educloud.main.common.IControllerSimple;
+import hu.studentspace.main.common.IController;
+import hu.studentspace.main.common.IControllerSimple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

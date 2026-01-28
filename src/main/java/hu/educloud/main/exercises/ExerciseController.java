@@ -1,4 +1,4 @@
-package hu.educloud.main.exercises;
+package hu.studentspace.main.exercises;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

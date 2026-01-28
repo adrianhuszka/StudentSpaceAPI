@@ -1,7 +1,7 @@
-package hu.educloud.main.auth;
+package hu.studentspace.main.auth;
 
-import hu.educloud.main.users.Users;
-import hu.educloud.main.users.UsersDTO;
+import hu.studentspace.main.users.Users;
+import hu.studentspace.main.users.UsersDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,15 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class AuthController{
+public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
     public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest) {
         TokenResponse tokenResponse = authService.authenticate(
                 loginRequest.username(),
-                loginRequest.password()
-        );
+                loginRequest.password());
         return ResponseEntity.ok(tokenResponse);
     }
 

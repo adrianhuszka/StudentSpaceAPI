@@ -1,8 +1,8 @@
-package hu.educloud.main.forumMessages;
+package hu.studentspace.main.forumMessages;
 
-import hu.educloud.main.common.IServiceSimple;
-import hu.educloud.main.errors.NotFoundException;
-import hu.educloud.main.forum.ForumRepository;
+import hu.studentspace.main.common.IServiceSimple;
+import hu.studentspace.main.errors.NotFoundException;
+import hu.studentspace.main.forum.ForumRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,4 +49,3 @@ public class ForumMessagesService {
         forumMessagesRepository.deleteById(id);
     }
 }
-
