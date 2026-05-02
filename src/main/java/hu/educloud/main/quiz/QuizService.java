@@ -1,11 +1,11 @@
-package hu.educloud.main.quiz;
+package hu.studentspace.main.quiz;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hu.educloud.main.errors.NotFoundException;
-import hu.educloud.main.module.Module;
-import hu.educloud.main.module.ModuleRepository;
+import hu.studentspace.main.errors.NotFoundException;
+import hu.studentspace.main.module.Module;
+import hu.studentspace.main.module.ModuleRepository;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

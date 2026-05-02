@@ -1,6 +1,6 @@
-package hu.educloud.main.quiz;
+package hu.studentspace.main.quiz;
 
-import hu.educloud.main.common.JwtUtils;
+import hu.studentspace.main.common.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

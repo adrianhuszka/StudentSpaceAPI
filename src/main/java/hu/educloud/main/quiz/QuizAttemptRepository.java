@@ -1,4 +1,4 @@
-package hu.educloud.main.quiz;
+package hu.studentspace.main.quiz;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

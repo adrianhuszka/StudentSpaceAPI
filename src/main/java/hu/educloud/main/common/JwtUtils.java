@@ -1,4 +1,4 @@
-package hu.educloud.main.common;
+package hu.studentspace.main.common;
 
 import java.util.Base64;
 

@@ -1,6 +1,6 @@
-package hu.educloud.main.quiz;
+package hu.studentspace.main.quiz;
 
-import hu.educloud.main.exercises.ExerciseType;
+import hu.studentspace.main.exercises.ExerciseType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;

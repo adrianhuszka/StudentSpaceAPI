@@ -1,4 +1,4 @@
-package hu.educloud.main.quiz;
+package hu.studentspace.main.quiz;
 
 import java.util.Map;
 import java.util.UUID;

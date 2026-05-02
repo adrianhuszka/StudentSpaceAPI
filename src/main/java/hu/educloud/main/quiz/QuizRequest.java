@@ -1,6 +1,6 @@
-package hu.educloud.main.quiz;
+package hu.studentspace.main.quiz;
 
-import hu.educloud.main.exercises.ExerciseType;
+import hu.studentspace.main.exercises.ExerciseType;
 
 import java.util.List;
 import java.util.UUID;
