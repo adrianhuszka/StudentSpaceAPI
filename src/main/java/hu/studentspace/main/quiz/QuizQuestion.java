@@ -1,12 +1,16 @@
 package hu.studentspace.main.quiz;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import hu.studentspace.main.exercises.ExerciseType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.UUID;
 
 @Entity
@@ -26,6 +30,7 @@ public class QuizQuestion implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id", nullable = false)
+    @JsonIgnore
     private Quiz quiz;
 
     @Enumerated(EnumType.STRING)
@@ -34,31 +39,27 @@ public class QuizQuestion implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String question;
 
-    /**
-     * Options for multiple choice questions, stored as JSON array string
-     * e.g., ["Option A", "Option B", "Option C", "Option D"]
-     */
+
     @Column(columnDefinition = "TEXT")
     private String options;
 
-    /**
-     * Correct answer(s), format depends on question type
-     * For multiple choice: the correct option text
-     * For true/false: "true" or "false"
-     * For short answer: the expected answer
-     */
+
     @Column(columnDefinition = "TEXT")
     private String correctAnswer;
 
-    /**
-     * Points awarded for correct answer
-     */
+
     @Builder.Default
     private Integer points = 1;
 
-    /**
-     * Order of the question in the quiz
-     */
+
     @Builder.Default
     private Integer orderIndex = 0;
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private Date createdAt;
+
+    @UpdateTimestamp
+    @Column(nullable = false)
+    private Date updatedAt;
 }

@@ -1,6 +1,5 @@
 package hu.studentspace.main.auth;
 
-import hu.studentspace.main.users.Users;
 import hu.studentspace.main.users.UsersDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

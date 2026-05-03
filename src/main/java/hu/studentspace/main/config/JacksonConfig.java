@@ -9,7 +9,7 @@ public class JacksonConfig {
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
-        // Automatically discover and register Jackson modules present on the classpath
+        
         mapper.findAndRegisterModules();
         return mapper;
     }

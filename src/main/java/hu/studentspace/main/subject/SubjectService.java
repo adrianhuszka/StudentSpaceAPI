@@ -1,7 +1,6 @@
 package hu.studentspace.main.subject;
 
 import hu.studentspace.main.common.IService;
-import hu.studentspace.main.common.IServiceSimple;
 import hu.studentspace.main.errors.NotFoundException;
 import hu.studentspace.main.forum.Forum;
 import hu.studentspace.main.forum.ForumRepository;
@@ -75,7 +74,7 @@ public class SubjectService implements IService<Subject, SubjectRequestDTO> {
         var profession = professionsRepository.findById(professionId)
                 .orElseThrow(() -> new NotFoundException(professionId.toString()));
 
-        // Update both sides
+        
         if (profession.getSubjects() == null
                 || profession.getSubjects().stream().noneMatch(s -> s.getId().equals(subjectId))) {
             profession.getSubjects().add(subject);
@@ -98,7 +97,7 @@ public class SubjectService implements IService<Subject, SubjectRequestDTO> {
         var profession = professionsRepository.findById(professionId)
                 .orElseThrow(() -> new NotFoundException(professionId.toString()));
 
-        // Remove from both sides
+        
         if (profession.getSubjects() != null) {
             profession.getSubjects().removeIf(s -> s.getId().equals(subjectId));
             professionsRepository.save(profession);
@@ -117,7 +116,7 @@ public class SubjectService implements IService<Subject, SubjectRequestDTO> {
         var subject = subjectRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id.toString()));
 
-        // Remove this subject from all professions (clears the many-to-many join table)
+        
         if (subject.getProfessions() != null) {
             for (var profession : subject.getProfessions()) {
                 profession.getSubjects().removeIf(s -> s.getId().equals(id));

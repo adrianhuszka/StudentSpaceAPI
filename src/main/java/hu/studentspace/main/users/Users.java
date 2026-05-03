@@ -1,7 +1,6 @@
 package hu.studentspace.main.users;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import hu.studentspace.main.forumMessages.ForumMessages;
 import jakarta.persistence.*;
 import lombok.*;

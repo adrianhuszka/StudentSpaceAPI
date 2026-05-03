@@ -1,6 +1,5 @@
 package hu.studentspace.main.forumMessages;
 
-import hu.studentspace.main.common.IControllerSimple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

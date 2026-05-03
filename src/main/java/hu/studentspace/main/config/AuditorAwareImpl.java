@@ -28,7 +28,7 @@ public class AuditorAwareImpl implements AuditorAware<UUID> {
             return Optional.empty();
         }
 
-        // Disable auto-flush to prevent infinite recursion during auditing
+        
         FlushModeType originalFlushMode = entityManager.getFlushMode();
         try {
             entityManager.setFlushMode(FlushModeType.COMMIT);

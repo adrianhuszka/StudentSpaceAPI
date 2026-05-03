@@ -1,7 +1,5 @@
 package hu.studentspace.main.auth;
 
-import hu.studentspace.main.users.Users;
-
 public record TokenResponse(
         String accessToken,
         String refreshToken,

@@ -5,7 +5,7 @@ import java.util.Base64;
 public class JwtUtils {
     
     private JwtUtils() {
-        // Utility class
+        
     }
 
     /**

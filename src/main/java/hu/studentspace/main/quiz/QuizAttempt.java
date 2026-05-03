@@ -1,5 +1,6 @@
 package hu.studentspace.main.quiz;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -27,11 +28,10 @@ public class QuizAttempt implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id", nullable = false)
+    @JsonIgnore
     private Quiz quiz;
 
-    /**
-     * Student identifier (username from JWT sub claim)
-     */
+
     @Column(nullable = false)
     private String studentId;
 
@@ -41,21 +41,14 @@ public class QuizAttempt implements Serializable {
 
     private Timestamp completedAt;
 
-    /**
-     * Student answers, stored as JSON
-     * Format: {"questionId": "answer", ...}
-     */
+
     @Column(columnDefinition = "TEXT")
     private String answers;
 
-    /**
-     * Score achieved (0-100 percentage)
-     */
+
     private Integer score;
 
-    /**
-     * Points earned out of total possible points
-     */
+
     private Integer pointsEarned;
 
     private Integer totalPoints;

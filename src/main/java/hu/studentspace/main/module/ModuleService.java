@@ -1,7 +1,6 @@
 package hu.studentspace.main.module;
 
 import hu.studentspace.main.common.IService;
-import hu.studentspace.main.common.IServiceSimple;
 import hu.studentspace.main.errors.NotFoundException;
 import hu.studentspace.main.subject.SubjectRepository;
 import lombok.NonNull;
@@ -37,7 +36,7 @@ public class ModuleService implements IService<Module, ModuleRequestDTO> {
                 .moduleType(ModuleTypes.valueOf(module.moduleType()))
                 .subject(subject);
 
-        // Handle PDF vs MD content
+        
         if (ModuleTypes.valueOf(module.moduleType()) == ModuleTypes.PDF) {
             moduleBuilder.pdfFile(module.pdfFile())
                     .pdfFileName(module.pdfFileName());
@@ -61,14 +60,14 @@ public class ModuleService implements IService<Module, ModuleRequestDTO> {
         existing.setModuleType(ModuleTypes.valueOf(module.moduleType()));
         existing.setSubject(subject);
 
-        // Handle PDF vs MD content
+        
         if (ModuleTypes.valueOf(module.moduleType()) == ModuleTypes.PDF) {
             existing.setPdfFile(module.pdfFile());
             existing.setPdfFileName(module.pdfFileName());
-            existing.setContent(null); // Clear content when switching to PDF
+            existing.setContent(null); 
         } else {
             existing.setContent(module.content());
-            existing.setPdfFile(null); // Clear PDF when switching to MD
+            existing.setPdfFile(null); 
             existing.setPdfFileName(null);
         }
 

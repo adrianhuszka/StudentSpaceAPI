@@ -1,6 +1,5 @@
 package hu.studentspace.main.forumMessages;
 
-import hu.studentspace.main.common.IServiceSimple;
 import hu.studentspace.main.errors.NotFoundException;
 import hu.studentspace.main.forum.ForumRepository;
 import lombok.NonNull;

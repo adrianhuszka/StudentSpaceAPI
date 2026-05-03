@@ -1,7 +1,6 @@
 package hu.studentspace.main.users;
 
 import hu.studentspace.main.common.IController;
-import hu.studentspace.main.config.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -49,11 +48,9 @@ public class UsersController implements IController<Users, UsersDTO> {
 
     @GetMapping("/me")
     public ResponseEntity<Users> getCurrentUser(Authentication authentication) {
-        // Option 1: Using Authentication parameter injected by Spring
+
         String username = authentication.getName();
 
-        // Option 2: Using SecurityUtils
-        // String username = SecurityUtils.getCurrentUsername();
 
         Users user = usersService.findByUsername(username);
         return ResponseEntity.ok(user);

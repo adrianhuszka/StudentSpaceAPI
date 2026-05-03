@@ -6,8 +6,10 @@ import hu.studentspace.main.users.UsersDTO;
 import hu.studentspace.main.users.UsersRepository;
 import hu.studentspace.main.users.UsersService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +20,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthService {
     private final UsersService usersService;
     private final UsersRepository usersRepository;
@@ -88,9 +91,16 @@ public class AuthService {
     }
 
     public void forgotPassword(String email) {
-        Optional<Users> optionalUser = usersRepository.findByEmail(email);
+        if (email == null || email.isBlank()) {
+            log.warn("Forgot-password called with empty email");
+            return;
+        }
+
+        String normalizedEmail = email.trim();
+        Optional<Users> optionalUser = usersRepository.findByEmailIgnoreCase(normalizedEmail);
 
         if (optionalUser.isEmpty()) {
+            log.info("Forgot-password: no user found for email={}", normalizedEmail);
             return;
         }
 
@@ -98,13 +108,18 @@ public class AuthService {
         String newPlainPassword = generateRandomPassword();
         String encodedPassword = passwordEncoder.encode(newPlainPassword);
 
-        user.setPassword(encodedPassword);
-        usersRepository.save(user);
-
-        sendPasswordResetEmail(user.getEmail(), user.getUsername(), newPlainPassword);
+        try {
+            sendPasswordResetEmail(user.getEmail(), user.getUsername(), newPlainPassword);
+            user.setPassword(encodedPassword);
+            usersRepository.save(user);
+            log.info("Forgot-password email sent successfully for userId={} email={}", user.getId(), user.getEmail());
+        } catch (MailException ex) {
+            log.error("Failed to send forgot-password email to {}", user.getEmail(), ex);
+            throw ex;
+        }
     }
 
-    private String generateRandomPassword() {
+    private @NotNull String generateRandomPassword() {
         StringBuilder builder = new StringBuilder(generatedPasswordLength);
 
         for (int i = 0; i < generatedPasswordLength; i++) {
@@ -120,7 +135,7 @@ public class AuthService {
         message.setFrom(fromEmail);
         message.setTo(toEmail);
         message.setSubject("StudentSpace - Új jelszó");
-        message.setText("Szia " + username + ",\n\nAz új ideiglenes jelszavad: " + newPassword
+        message.setText("Kedves, " + username + ",\n\nAz új ideiglenes jelszavad: " + newPassword
                 + "\n\nBejelentkezés után kérlek változtasd meg a jelszavad.");
         mailSender.send(message);
     }

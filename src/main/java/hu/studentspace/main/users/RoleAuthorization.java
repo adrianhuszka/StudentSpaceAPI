@@ -7,10 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * Convenience annotations for role-based access control.
- * These annotations can be used on controller methods to restrict access.
- */
+
 public class RoleAuthorization {
 
     @Target(ElementType.METHOD)

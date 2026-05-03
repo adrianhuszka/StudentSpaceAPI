@@ -52,7 +52,7 @@ public class QuizController {
         return ResponseEntity.noContent().build();
     }
 
-    // Quiz attempt endpoints
+    
 
     @PostMapping("/{id}/start")
     public ResponseEntity<?> startQuiz(

@@ -57,12 +57,12 @@ public class SecurityConfig {
                 })
                 .authorizeHttpRequests(authorizeRequests -> {
                     authorizeRequests
-                            .requestMatchers("/api/v1/auth/**").permitAll() // Allow public access to auth endpoints
+                            .requestMatchers("/api/v1/auth/**").permitAll() 
                         .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
                             .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
                                     "/v3/api-docs.yaml")
-                            .permitAll() // Swagger
-                            .anyRequest().authenticated(); // All other endpoints require authentication
+                            .permitAll() 
+                            .anyRequest().authenticated(); 
                 })
                 .oauth2Login(oauth2 -> oauth2.successHandler(oAuth2AuthenticationSuccessHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))

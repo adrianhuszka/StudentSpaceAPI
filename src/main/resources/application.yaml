@@ -15,6 +15,37 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  mail:
+    host: ${MAIL_HOST:smtp-mail.outlook.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:noreply@pollakszentes.hu}
+    password: ${MAIL_PASSWORD:VYptv226}
+    properties:
+      mail:
+        smtp:
+          auth: ${MAIL_SMTP_AUTH:true}
+          starttls:
+            enable: ${MAIL_SMTP_STARTTLS:true}
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: ${KEYCLOAK_CLIENT_ID:student-space}
+            client-secret: ${KEYCLOAK_CLIENT_SECRET:zqxDhuUZyUKbh1VGODmhwZEPsWbfbpfW}
+            authorization-grant-type: authorization_code
+            redirect-uri: ${KEYCLOAK_REDIRECT_URI:http://localhost:8080/login/oauth2/code/keycloak}
+            scope:
+              - openid
+              - profile
+              - email
+        provider:
+          keycloak:
+            authorization-uri: ${KEYCLOAK_AUTHORIZATION_URI:https://keycloak.pollak.info/realms/master/protocol/openid-connect/auth}
+            token-uri: ${KEYCLOAK_TOKEN_URI:https://keycloak.pollak.info/realms/master/protocol/openid-connect/token}
+            user-info-uri: ${KEYCLOAK_USERINFO_URI:https://keycloak.pollak.info/realms/master/protocol/openid-connect/userinfo}
+            jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:https://keycloak.pollak.info/realms/master/protocol/openid-connect/certs}
+            user-name-attribute: preferred_username
 
 server:
   max-http-request-header-size: 1MB
@@ -23,8 +54,16 @@ server:
 
 jwt:
   secret: ${JWT_SECRET:mySecretKeyForJWTTokenGenerationPleaseChangeThisInProduction1234567890}
-  access-token-expiration: 900000  # 15 minutes in milliseconds
-  refresh-token-expiration: 604800000  # 7 days in milliseconds
+  access-token-expiration: 900000 # 15 minutes in milliseconds
+  refresh-token-expiration: 604800000 # 7 days in milliseconds
+
+app:
+  frontend-url: ${FRONTEND_URL:http://localhost:4200/}
+  mail:
+    from: ${APP_MAIL_FROM:noreply@pollakszentes.hu}
+
+  reset-password:
+    length: ${APP_RESET_PASSWORD_LENGTH:12}
 
 logging:
   level:

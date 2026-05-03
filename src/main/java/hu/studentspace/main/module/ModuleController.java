@@ -34,28 +34,28 @@ public class ModuleController implements IController<Module, ModuleRequestDTO> {
         return ResponseEntity.ok(moduleService.findById(UUID.fromString(id)));
     }
 
-    // JSON create (implements interface)
+    
     @Override
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> create(@RequestBody ModuleRequestDTO module) {
         return ResponseEntity.ok(moduleService.save(module));
     }
 
-    // Multipart create for file uploads
+    
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> createMultipart(MultipartHttpServletRequest mreq) throws IOException {
         var dto = toDtoFromMultipart(mreq);
         return ResponseEntity.ok(moduleService.save(dto));
     }
 
-    // JSON update (implements interface)
+    
     @Override
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> update(@RequestBody ModuleRequestDTO module) {
         return ResponseEntity.ok(moduleService.update(module));
     }
 
-    // Multipart update
+    
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> updateMultipart(MultipartHttpServletRequest mreq) throws IOException {
         var dto = toDtoFromMultipart(mreq);
@@ -74,7 +74,7 @@ public class ModuleController implements IController<Module, ModuleRequestDTO> {
         if (!StringUtils.hasText(fileName))
             fileName = "file.pdf";
 
-        // Use RFC5987 encoding for UTF-8 filenames to avoid Tomcat charset issues
+        
         String encoded = URLEncoder.encode(fileName, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
         String contentDisposition = "attachment; filename*=UTF-8''" + encoded;
 

@@ -100,26 +100,26 @@ public class ProfessionsService {
     @Contract(pure = true)
     private @NotNull String detectImageMimeType(byte[] imageBytes) {
         if (imageBytes == null || imageBytes.length < 4) {
-            return "image/png"; // default
+            return "image/png"; 
         }
 
-        // Check PNG signature
+        
         if (imageBytes[0] == (byte) 0x89 && imageBytes[1] == 0x50 &&
                 imageBytes[2] == 0x4E && imageBytes[3] == 0x47) {
             return "image/png";
         }
 
-        // Check JPEG signature
+        
         if (imageBytes[0] == (byte) 0xFF && imageBytes[1] == (byte) 0xD8) {
             return "image/jpeg";
         }
 
-        // Check GIF signature
+        
         if (imageBytes[0] == 0x47 && imageBytes[1] == 0x49 && imageBytes[2] == 0x46) {
             return "image/gif";
         }
 
-        // Check WebP signature
+        
         if (imageBytes.length >= 12 && imageBytes[0] == 0x52 && imageBytes[1] == 0x49 &&
                 imageBytes[2] == 0x46 && imageBytes[3] == 0x46 &&
                 imageBytes[8] == 0x57 && imageBytes[9] == 0x45 &&
@@ -127,7 +127,7 @@ public class ProfessionsService {
             return "image/webp";
         }
 
-        // Default to PNG if unknown
+        
         return "image/png";
     }
 }

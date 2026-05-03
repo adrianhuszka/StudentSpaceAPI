@@ -1,7 +1,6 @@
 package hu.studentspace.main.quiz;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.studentspace.main.errors.NotFoundException;
 import hu.studentspace.main.module.Module;
@@ -111,7 +110,7 @@ public class QuizService {
             quiz.setSubjectId(null);
         }
 
-        // Update questions
+        
         quiz.getQuestions().clear();
         if (request.questions() != null) {
             for (int i = 0; i < request.questions().size(); i++) {
@@ -139,7 +138,7 @@ public class QuizService {
         quizRepository.delete(quiz);
     }
 
-    // Quiz attempt methods
+    
 
     @Transactional
     public QuizAttempt startQuiz(String quizId, String studentId) {
@@ -168,7 +167,7 @@ public class QuizService {
 
         Quiz quiz = attempt.getQuiz();
 
-        // Calculate score
+        
         int totalPoints = 0;
         int earnedPoints = 0;
 
@@ -183,7 +182,7 @@ public class QuizService {
         int score = totalPoints > 0 ? (earnedPoints * 100) / totalPoints : 0;
         boolean passed = score >= quiz.getPassingScore();
 
-        // Save answers as JSON
+        
         try {
             attempt.setAnswers(objectMapper.writeValueAsString(request.answers()));
         } catch (JsonProcessingException e) {

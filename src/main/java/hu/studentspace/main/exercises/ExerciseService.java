@@ -2,7 +2,6 @@ package hu.studentspace.main.exercises;
 
 import hu.studentspace.main.errors.NotFoundException;
 import hu.studentspace.main.module.ModuleRepository;
-import hu.studentspace.main.module.ModuleTypes;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;

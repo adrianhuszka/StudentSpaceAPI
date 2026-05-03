@@ -1,6 +1,5 @@
 package hu.studentspace.main.quiz;
 
-import hu.studentspace.main.exercises.ExerciseType;
 import hu.studentspace.main.module.Module;
 import jakarta.persistence.*;
 import lombok.*;
@@ -46,14 +45,10 @@ public class Quiz implements Serializable {
     @Column(name = "subject_id")
     private UUID subjectId;
 
-    /**
-     * Time limit in minutes, null means no limit
-     */
+
     private Integer timeLimit;
 
-    /**
-     * Passing score percentage (0-100)
-     */
+
     @Builder.Default
     private Integer passingScore = 60;
 
