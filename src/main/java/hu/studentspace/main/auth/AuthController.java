@@ -34,4 +34,11 @@ public class AuthController {
         TokenResponse tokenResponse = authService.refreshAccessToken(refreshRequest.refreshToken());
         return ResponseEntity.ok(tokenResponse);
     }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<AuthMessageResponse> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+        authService.forgotPassword(request.email());
+        return ResponseEntity.ok(new AuthMessageResponse(
+                "Ha a megadott email cím létezik, kiküldtünk egy új jelszót."));
+    }
 }

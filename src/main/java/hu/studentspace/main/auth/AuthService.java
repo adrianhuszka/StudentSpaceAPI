@@ -8,8 +8,13 @@ import hu.studentspace.main.users.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.security.SecureRandom;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,9 +23,19 @@ public class AuthService {
     private final UsersRepository usersRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final JavaMailSender mailSender;
+
+    private static final String PASSWORD_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%";
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     @Value("${jwt.access-token-expiration}")
     private long accessTokenExpiration;
+
+    @Value("${app.mail.from:no-reply@studentspace.local}")
+    private String fromEmail;
+
+    @Value("${app.reset-password.length:12}")
+    private int generatedPasswordLength;
 
     public TokenResponse authenticate(String username, String password) {
         var user = usersService.findByUsername(username);
@@ -70,5 +85,43 @@ public class AuthService {
         }
 
         throw new BadCredentialsException("Invalid refresh token");
+    }
+
+    public void forgotPassword(String email) {
+        Optional<Users> optionalUser = usersRepository.findByEmail(email);
+
+        if (optionalUser.isEmpty()) {
+            return;
+        }
+
+        Users user = optionalUser.get();
+        String newPlainPassword = generateRandomPassword();
+        String encodedPassword = passwordEncoder.encode(newPlainPassword);
+
+        user.setPassword(encodedPassword);
+        usersRepository.save(user);
+
+        sendPasswordResetEmail(user.getEmail(), user.getUsername(), newPlainPassword);
+    }
+
+    private String generateRandomPassword() {
+        StringBuilder builder = new StringBuilder(generatedPasswordLength);
+
+        for (int i = 0; i < generatedPasswordLength; i++) {
+            int index = SECURE_RANDOM.nextInt(PASSWORD_CHARS.length());
+            builder.append(PASSWORD_CHARS.charAt(index));
+        }
+
+        return builder.toString();
+    }
+
+    private void sendPasswordResetEmail(String toEmail, String username, String newPassword) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(fromEmail);
+        message.setTo(toEmail);
+        message.setSubject("StudentSpace - Új jelszó");
+        message.setText("Szia " + username + ",\n\nAz új ideiglenes jelszavad: " + newPassword
+                + "\n\nBejelentkezés után kérlek változtasd meg a jelszavad.");
+        mailSender.send(message);
     }
 }
