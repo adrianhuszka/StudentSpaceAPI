@@ -39,6 +39,7 @@ public class UsersService implements IService<Users, UsersDTO> {
                 .email(usersDTO.email())
                 .password(usersDTO.password())
                 .roles(usersDTO.roles() != null ? usersDTO.roles() : Set.of(UserRole.STUDENT))
+                .enabled(true)
                 .build();
 
         return usersRepository.save(user).getId().toString();
@@ -60,5 +61,40 @@ public class UsersService implements IService<Users, UsersDTO> {
     @Override
     public void delete(@NonNull UUID id) {
         usersRepository.deleteById(id);
+    }
+
+    public String updateUserRoles(@NonNull UUID id, Set<UserRole> roles) {
+        var user = usersRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(id.toString()));
+
+        Set<UserRole> updatedRoles = (roles == null || roles.isEmpty())
+                ? Set.of(UserRole.STUDENT)
+                : roles;
+
+        user.setRoles(updatedRoles);
+        return usersRepository.save(user).getId().toString();
+    }
+
+    public boolean toggleUserStatus(@NonNull UUID id) {
+        var user = usersRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(id.toString()));
+
+        boolean currentEnabled = Boolean.TRUE.equals(user.getEnabled());
+        user.setEnabled(!currentEnabled);
+        usersRepository.save(user);
+
+        return user.getEnabled();
+    }
+
+    public UserStatsResponse getUserStats() {
+        List<Users> users = usersRepository.findAll();
+
+        long totalUsers = users.size();
+        long activeUsers = users.stream().filter(user -> Boolean.TRUE.equals(user.getEnabled())).count();
+        long adminUsers = users.stream().filter(user -> user.getRoles() != null && user.getRoles().stream()
+                .anyMatch(role -> role == UserRole.ADMIN || role == UserRole.SUPERADMIN)).count();
+        long teacherUsers = users.stream().filter(user -> user.getRoles() != null && user.getRoles().contains(UserRole.TEACHER)).count();
+
+        return new UserStatsResponse(totalUsers, activeUsers, adminUsers, teacherUsers);
     }
 }

@@ -18,6 +18,11 @@ public class ProfessionsController {
         return ResponseEntity.ok(professionsService.getAll());
     }
 
+    @GetMapping("/stats")
+    public ResponseEntity<ProfessionStatsResponse> getStats() {
+        return ResponseEntity.ok(professionsService.getStats());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ProfessionsResponseDTO> getById(@PathVariable String id) {
         return ResponseEntity.ok(professionsService.findById(UUID.fromString(id)));

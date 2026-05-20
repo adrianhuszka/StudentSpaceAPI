@@ -41,7 +41,18 @@ public class Users implements Serializable {
     @Column(name = "role")
     private Set<UserRole> roles;
 
+    @Builder.Default
+    @Column
+    private Boolean enabled = true;
+
     @OneToMany(mappedBy = "author")
     @JsonBackReference
     private List<ForumMessages> forumMessages;
+
+    @PrePersist
+    public void ensureEnabledDefault() {
+        if (enabled == null) {
+            enabled = true;
+        }
+    }
 }

@@ -1,6 +1,8 @@
 package hu.studentspace.main.professions;
 
 import hu.studentspace.main.errors.NotFoundException;
+import hu.studentspace.main.module.ModuleRepository;
+import hu.studentspace.main.subject.SubjectRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Contract;
@@ -15,6 +17,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ProfessionsService {
     private final ProfessionsRepository professionsRepository;
+    private final SubjectRepository subjectRepository;
+    private final ModuleRepository moduleRepository;
 
     public List<ProfessionsResponseDTO> getAll() {
         var professions = professionsRepository.findAll();
@@ -69,6 +73,22 @@ public class ProfessionsService {
 
     public void delete(@NonNull UUID id) {
         professionsRepository.deleteById(id);
+    }
+
+    public ProfessionStatsResponse getStats() {
+        long totalProfessions = professionsRepository.count();
+        long totalSubjects = subjectRepository.count();
+        long totalModules = moduleRepository.count();
+
+        double averageSubjectsPerProfession = 0.0;
+        if (totalProfessions > 0) {
+            long totalProfessionSubjectLinks = professionsRepository.findAll().stream()
+                    .mapToLong(profession -> profession.getSubjects() == null ? 0 : profession.getSubjects().size())
+                    .sum();
+            averageSubjectsPerProfession = (double) totalProfessionSubjectLinks / totalProfessions;
+        }
+
+        return new ProfessionStatsResponse(totalProfessions, totalSubjects, totalModules, averageSubjectsPerProfession);
     }
 
     private byte[] decodeBase64Image(String image) {

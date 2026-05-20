@@ -50,7 +50,7 @@ public class ForumMessages implements Serializable {
 
     @CreatedBy
     @Column(name = "created_by")
-    private UUID createdBy;
+    private String createdBy;
 
     @UpdateTimestamp
     @Column(nullable = false)
@@ -58,5 +58,5 @@ public class ForumMessages implements Serializable {
 
     @LastModifiedBy
     @Column(name = "updated_by")
-    private UUID updatedBy;
+    private String updatedBy;
 }

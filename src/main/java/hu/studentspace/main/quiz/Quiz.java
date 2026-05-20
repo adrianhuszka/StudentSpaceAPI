@@ -66,14 +66,14 @@ public class Quiz implements Serializable {
 
     @CreatedBy
     @Column(updatable = false)
-    private UUID createdBy;
+    private String createdBy;
 
     @UpdateTimestamp
     @Column(nullable = false)
     private Date updatedAt;
 
     @LastModifiedBy
-    private UUID updatedBy;
+    private String updatedBy;
 
     public void addQuestion(QuizQuestion question) {
         questions.add(question);

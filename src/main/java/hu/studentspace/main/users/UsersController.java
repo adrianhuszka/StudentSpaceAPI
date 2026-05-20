@@ -22,28 +22,45 @@ public class UsersController implements IController<Users, UsersDTO> {
     }
 
     @Override
-    @GetMapping("/:id")
-    public ResponseEntity<Users> getById(String id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Users> getById(@PathVariable String id) {
         return ResponseEntity.ok(usersService.findById(UUID.fromString(id)));
     }
 
     @Override
     @PostMapping
-    public ResponseEntity<String> create(UsersDTO usersDTO) {
+    public ResponseEntity<String> create(@RequestBody UsersDTO usersDTO) {
         return ResponseEntity.ok(usersService.save(usersDTO));
     }
 
     @Override
     @PutMapping
-    public ResponseEntity<String> update(UsersDTO usersDTO) {
+    public ResponseEntity<String> update(@RequestBody UsersDTO usersDTO) {
         return ResponseEntity.ok(usersService.update(usersDTO));
     }
 
     @Override
-    @DeleteMapping
-    public ResponseEntity<Void> delete(String id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         usersService.delete(UUID.fromString(id));
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/roles")
+    public ResponseEntity<String> updateUserRoles(@PathVariable String id, @RequestBody UpdateUserRolesRequest request) {
+        String updatedUserId = usersService.updateUserRoles(UUID.fromString(id), request.roles());
+        return ResponseEntity.ok(updatedUserId);
+    }
+
+    @PutMapping("/{id}/toggle-status")
+    public ResponseEntity<Boolean> toggleUserStatus(@PathVariable String id) {
+        boolean enabled = usersService.toggleUserStatus(UUID.fromString(id));
+        return ResponseEntity.ok(enabled);
+    }
+
+    @GetMapping("/stats")
+    public ResponseEntity<UserStatsResponse> getUserStats() {
+        return ResponseEntity.ok(usersService.getUserStats());
     }
 
     @GetMapping("/me")

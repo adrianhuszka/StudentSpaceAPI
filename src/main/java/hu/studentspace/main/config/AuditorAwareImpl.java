@@ -10,10 +10,9 @@ import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Component
-public class AuditorAwareImpl implements AuditorAware<UUID> {
+public class AuditorAwareImpl implements AuditorAware<String> {
 
     @Autowired
     private UsersRepository usersRepository;
@@ -22,7 +21,7 @@ public class AuditorAwareImpl implements AuditorAware<UUID> {
     private EntityManager entityManager;
 
     @Override
-    public Optional<UUID> getCurrentAuditor() {
+    public Optional<String> getCurrentAuditor() {
         String username = SecurityUtils.getCurrentUsername();
         if (username == null) {
             return Optional.empty();
@@ -33,7 +32,7 @@ public class AuditorAwareImpl implements AuditorAware<UUID> {
         try {
             entityManager.setFlushMode(FlushModeType.COMMIT);
             return usersRepository.findByUsername(username)
-                    .map(Users::getId);
+                    .map(Users::getUsername);
         } finally {
             entityManager.setFlushMode(originalFlushMode);
         }
