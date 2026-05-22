@@ -18,7 +18,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 @Configuration
 @RequiredArgsConstructor
@@ -30,6 +37,12 @@ public class SecurityConfig {
 
     @Value("${app.security.oauth2-enabled:false}")
     private boolean oauth2Enabled;
+
+    @Value("${app.security.allowed-origins:http://localhost:4200,https://student-space.pollak.info}")
+    private String allowedOrigins;
+
+    @Value("${app.security.allowed-hosts:localhost,127.0.0.1,student-space.pollak.info,api-student-space.pollak.info}")
+    private String allowedHosts;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -49,12 +62,27 @@ public class SecurityConfig {
     }
 
     @Bean
+    public HttpFirewall httpFirewall() {
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
+        List<String> hosts = parseCsv(allowedHosts).stream()
+                .map(host -> host.toLowerCase(Locale.ROOT))
+                .collect(Collectors.toList());
+
+        firewall.setAllowedHostnames(hostHeader -> {
+            String value = hostHeader == null ? "" : hostHeader.toLowerCase(Locale.ROOT).trim();
+            String hostnameOnly = value.contains(":") ? value.substring(0, value.indexOf(':')) : value;
+            return hosts.contains(value) || hosts.contains(hostnameOnly);
+        });
+        return firewall;
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(httpSecurityCorsConfigurer -> {
                     httpSecurityCorsConfigurer.configurationSource(request -> {
                         var cors = new CorsConfiguration();
-                        cors.setAllowedOrigins(java.util.List.of("http://localhost:4200"));
+                        cors.setAllowedOrigins(parseCsv(allowedOrigins));
                         cors.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                         cors.setAllowedHeaders(java.util.List.of("*"));
                         cors.setAllowCredentials(true);
@@ -83,5 +111,12 @@ public class SecurityConfig {
         }
 
         return http.build();
+    }
+
+    private List<String> parseCsv(String value) {
+        return Arrays.stream(value.split(","))
+                .map(String::trim)
+                .filter(item -> !item.isBlank())
+                .toList();
     }
 }

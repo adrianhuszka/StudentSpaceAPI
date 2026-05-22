@@ -19,7 +19,7 @@ spring:
     host: ${MAIL_HOST:smtp-mail.outlook.com}
     port: ${MAIL_PORT:587}
     username: ${MAIL_USERNAME:noreply@pollakszentes.hu}
-    password: ${MAIL_PASSWORD:VYptv226}
+    password: ${MAIL_PASSWORD:asd}
     properties:
       mail:
         smtp:
@@ -32,7 +32,7 @@ spring:
         registration:
           keycloak:
             client-id: ${KEYCLOAK_CLIENT_ID:student-space}
-            client-secret: ${KEYCLOAK_CLIENT_SECRET:zqxDhuUZyUKbh1VGODmhwZEPsWbfbpfW}
+            client-secret: ${KEYCLOAK_CLIENT_SECRET:asd}
             authorization-grant-type: authorization_code
             redirect-uri: ${KEYCLOAK_REDIRECT_URI:http://localhost:8080/login/oauth2/code/keycloak}
             scope:
@@ -59,6 +59,9 @@ jwt:
 
 app:
   frontend-url: ${FRONTEND_URL:http://localhost:4200/}
+  security:
+    allowed-origins: ${APP_SECURITY_ALLOWED_ORIGINS:http://localhost:4200,https://student-space.pollak.info}
+    allowed-hosts: ${APP_SECURITY_ALLOWED_HOSTS:localhost,127.0.0.1,student-space.pollak.info,api-student-space.pollak.info}
   mail:
     from: ${APP_MAIL_FROM:noreply@pollakszentes.hu}
 
